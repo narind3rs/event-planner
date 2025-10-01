@@ -16,7 +16,15 @@ import { IEvent } from "./index";
     `]
 })
 export class CreateEventComponent {
-    //    event: IEvent
+    name: string = ''
+    date: string = ''
+    time: string = ''
+    price: number | undefined
+    address: string = ''
+    city: string = ''
+    country: string = ''
+    onlineUrl: string = ''
+    imageUrl: string = ''
     isDirty: boolean = true
 
     constructor(private router: Router, private eventService: EventService) {

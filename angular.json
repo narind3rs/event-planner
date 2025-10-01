@@ -23,8 +23,7 @@
                 "glob": "**/*",
                 "input": "app/assets",
                 "output": "/assets"
-              },
-              "styles.css"
+              }
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",

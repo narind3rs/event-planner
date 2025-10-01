@@ -6,6 +6,8 @@ import { Router } from '@angular/router'
     templateUrl: './login.component.html'
 })
 export class LoginComponent {
+    userName: string = ''
+    password: string = ''
     loginInvalid = false
 
     constructor(private authService: AuthService, private router: Router) {
