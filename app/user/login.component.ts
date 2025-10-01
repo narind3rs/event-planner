@@ -3,7 +3,7 @@ import { AuthService } from "./auth.service"
 import { Router } from '@angular/router'
 
 @Component({
-    templateUrl: 'app/user/login.component.html'
+    templateUrl: './login.component.html'
 })
 export class LoginComponent {
     loginInvalid = false

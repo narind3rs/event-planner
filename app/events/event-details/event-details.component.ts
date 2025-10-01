@@ -4,7 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router'
 import { IEvent, ISession } from "../index";
 
 @Component({
-    templateUrl: '/app/events/event-details/event-details.component.html',
+    templateUrl: './event-details.component.html',
     styles: [`
         .container { padding-left: 20px; padding-right: 20px; }
         .event-image { height: 100px; }

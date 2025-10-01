@@ -5,7 +5,7 @@ import { VoterService } from './voter.service'
 
 @Component({
     selector: 'session-list',
-    templateUrl: 'app/events/event-details/session-list.component.html'
+    templateUrl: './session-list.component.html'
 })
 export class SessionListComponent  implements OnChanges {
     @Input() sessions: ISession[]
