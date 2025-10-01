@@ -16,7 +16,9 @@
             "outputPath": "dist/event-planner",
             "index": "index.html",
             "main": "app/main.ts",
-            "polyfills": [],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.json",
             "assets": [
               {
