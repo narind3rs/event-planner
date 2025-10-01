@@ -9,7 +9,4 @@ controllers/
 database/
 auth.js
 bundler.js
-expressConfig.js
-passport.js
-routes.js
 
