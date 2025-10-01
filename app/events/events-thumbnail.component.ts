@@ -3,10 +3,7 @@ import { IEvent } from "./index";
 
 @Component({
     selector: 'event-thumbnail',
-    templateUrl: 'app/events/event-thumbnail.component.html',
-    styleUrls: [
-        'app/assets/css/site.css'
-    ]
+    templateUrl: './event-thumbnail.component.html'
 })
 export class EventThumbnailComponent {
     @Input() event: IEvent

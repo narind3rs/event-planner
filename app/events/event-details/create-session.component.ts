@@ -5,7 +5,7 @@ import { restrictedWords } from '../shared/restricted-words.validator'
 
 @Component({
     selector: 'create-session',
-    templateUrl: 'app/events/event-details/create-session.component.html',
+    templateUrl: './create-session.component.html',
     styles: [`
         em {float:right; color: #E05C65; padding-left: 10px; }
         .error input { background-color: #E3C3C5; }

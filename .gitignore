@@ -3,5 +3,13 @@ typings
 /app/**/*.js
 /app/**/*.map
 .vscode/
-
+dist/
+.angular/
+controllers/
+database/
+auth.js
+bundler.js
+expressConfig.js
+passport.js
+routes.js
 

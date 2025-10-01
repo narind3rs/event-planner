@@ -1,29 +1,31 @@
 import { Injectable } from '@angular/core'
 import { IUser } from './user.model'
-import { Http, Headers, Response, RequestOptions } from '@angular/http'
-import { Observable } from 'rxjs/Rx'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { Observable, of } from 'rxjs'
+import { tap, map, catchError } from 'rxjs/operators'
 
 @Injectable()
 export class AuthService {
-    currentUser: IUser
+    currentUser: IUser | undefined
 
-    constructor(private http: Http) {}
+    constructor(private http: HttpClient) {}
 
     loginUser(userName: string, password: string) {
-       let headers = new Headers({ 'Content-Type': 'application/json' })
-
-       let options = new RequestOptions({ headers: headers })
+       let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
 
        let loginInfo = { username: userName, password: password }
 
-       return this.http.post('/api/login', JSON.stringify(loginInfo), options)
-        .do( resp => {
-            if (resp) {
-                this.currentUser = <IUser>resp.json().user
-            }
-        }).catch(error => {
-            return Observable.of(false)
-        })
+       return this.http.post<{user: IUser}>('/api/login', JSON.stringify(loginInfo), { headers: headers })
+        .pipe(
+            tap(resp => {
+                if (resp) {
+                    this.currentUser = resp.user
+                }
+            }),
+            catchError(error => {
+                return of(false)
+            })
+        )
     }
 
     isAuthenticated() {
@@ -31,38 +33,36 @@ export class AuthService {
     }
 
     checkAuthenticationStatus() {
-        return this.http.get('/api/currentidentity').map( (response: any) => {
-            if(response._body) {
-                return response.json()
-            } else {
-                return {}
-            }
-        }).do(currentUser => {
-            if (!!currentUser.userName) {
-                this.currentUser = currentUser
-            }
-        })
+        return this.http.get<IUser>('/api/currentidentity').pipe(
+            map((currentUser: any) => {
+                return currentUser || {}
+            }),
+            tap(currentUser => {
+                if (!!currentUser.userName) {
+                    this.currentUser = currentUser
+                }
+            })
+        )
         .subscribe()
     }
 
     logout() {
         this.currentUser = undefined
 
-        let headers = new Headers({ 'Content-Type': 'application/json' })
-        let options = new RequestOptions({ headers: headers })
+        let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
 
-        return this.http.post('/api/logout', JSON.stringify({}), options)
+        return this.http.post('/api/logout', JSON.stringify({}), { headers: headers })
     }
 
     updateCurrentUser(firstName: string, lastName: string) {
-        this.currentUser.firstName = firstName
-        this.currentUser.lastName = lastName
+        if (this.currentUser) {
+            this.currentUser.firstName = firstName
+            this.currentUser.lastName = lastName
 
-        let headers = new Headers({ 'Content-Type': 'application/json' })
+            let headers = new HttpHeaders({ 'Content-Type': 'application/json' })
 
-       let options = new RequestOptions({ headers: headers })
-
-       return this.http.put(`/api/users/${this.currentUser.id}`, JSON.stringify(this.currentUser), options)
-
+            return this.http.put(`/api/users/${this.currentUser.id}`, JSON.stringify(this.currentUser), { headers: headers })
+        }
+        return of(null)
     }
 }
